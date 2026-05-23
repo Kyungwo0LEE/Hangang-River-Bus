@@ -1,6 +1,6 @@
 # Demand-Driven Hangang River Bus Operation Optimization
 
-This project proposes a demand-driven optimization framework for Han River Bus operation by integrating geospatial analysis, demand modeling, machine learning-based feature optimization, dock recommendation, and route planning.
+This project proposes a demand-driven optimization framework for Hangang River Bus operation by integrating geospatial analysis, demand modeling, machine learning-based feature optimization, dock recommendation, and route planning.
 
 The analysis considers subway accessibility, subway ridership demand, administrative-dong population and worker counts, nearby tourist/night-view places, and distance from existing docks.
 
@@ -46,7 +46,7 @@ This project aims to optimize Hangang River Bus operation through:
 
 5. Optimize feature weights using Random Search
 
-6. Generate dock candidates at 200 m intervals along the Han River
+6. Generate dock candidates at 200 m intervals along the Hangang River
 
 7. Generate candidate docks
 
