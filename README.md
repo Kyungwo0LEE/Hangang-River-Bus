@@ -1,6 +1,13 @@
 # Han River Bus Dock Location Analysis
 
-This repository contains the final analysis outputs for comparing candidate locations for new Han River Bus docks in Seoul. The analysis considers subway accessibility, subway ridership demand, administrative-dong population and worker counts, nearby tourist/night-view places, and distance from existing docks.
+This repository contains the final analysis outputs for comparing candidate locations for new Han River Bus docks in Seoul. 
+
+The analysis considers subway accessibility, subway ridership demand, administrative-dong population and worker counts, nearby tourist/night-view places, and distance from existing docks.
+
+📄 Presentation: [PDF Slides](./스마트%20한강버스%20운영%20시스템.pdf)
+
+🌐 Interactive Map:
+https://kyungwo0lee.github.io/Hangang-River-Bus/
 
 ## Repository Structure
 
