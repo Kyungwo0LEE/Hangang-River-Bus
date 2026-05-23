@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f913c44bfaac020e36f62916fdd05b5f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.css"/>
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    bottom: 35px;
+    left: 35px;
+    width: 285px;
+    z-index: 9999;
+    background-color: white;
+    border: 2px solid #777;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 13px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+">
+    <b>97016 TOP30 클러스터 지도</b><br><br>
+    20m 이내 후보점이 3개 이상 모인 경우만 표시<br><br>
+    <span style="color:#d7191c;">●</span> 클러스터 내 최고 후보가 1~5위<br>
+    <span style="color:#fdae61;">●</span> 클러스터 내 최고 후보가 6~10위<br>
+    <span style="color:#2c7bb6;">●</span> 클러스터 내 최고 후보가 11~20위<br>
+    <span style="color:#1a9641;">●</span> 클러스터 내 최고 후보가 21~30위<br><br>
+    원 안 숫자 = 클러스터에 포함된 후보 수<br>
+    원 크기 = 모인 후보 수가 많을수록 큼<br>
+    검은 선착장 마커 = 기존 선착장
+</div>
+    
+            <div class="folium-map" id="map_f913c44bfaac020e36f62916fdd05b5f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f913c44bfaac020e36f62916fdd05b5f = L.map(
+                "map_f913c44bfaac020e36f62916fdd05b5f",
+                {
+                    center: [37.529006376866775, 127.0038366737954],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+
+            
+
+        
+    
+            var tile_layer_d004279229dc40ad60888cad36344d69 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d004279229dc40ad60888cad36344d69.addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+        
+    
+            var tile_layer_092b91b344cf91a5b77e4d8d176f1433 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_5a730bd62fca23c5f441ad129fd28d9f = new L.Control.MiniMap(
+                tile_layer_092b91b344cf91a5b77e4d8d176f1433,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_f913c44bfaac020e36f62916fdd05b5f.addControl(mini_map_5a730bd62fca23c5f441ad129fd28d9f);
+        
+    
+            var mouse_position_68713c099213d518fedb9e4053518a6d = new L.Control.MousePosition(
+                {
+  "position": "bottomright",
+  "separator": " | ",
+  "emptyString": "Unavailable",
+  "lngFirst": false,
+  "numDigits": 5,
+  "prefix": "\uc704\ub3c4/\uacbd\ub3c4",
+}
+            );
+            mouse_position_68713c099213d518fedb9e4053518a6d.options["latFormatter"] =
+                undefined;
+            mouse_position_68713c099213d518fedb9e4053518a6d.options["lngFormatter"] =
+                undefined;
+            map_f913c44bfaac020e36f62916fdd05b5f.addControl(mouse_position_68713c099213d518fedb9e4053518a6d);
+        
+    
+            var feature_group_d1221fc1b142c59525a98b9744b2ed87 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_4222e802d717553d49cf603b71334f9d = L.circleMarker(
+                [37.51142539399458, 126.99551669657122],
+                {"bubblingMouseEvents": true, "color": "#d7191c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7191c", "fillOpacity": 0.78, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 26, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+        var popup_63bb88e2b31f982a9817b828a5c128d2 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_22aaa53b9144ceda18e3eec3cee04e8d = $(`<div id="html_22aaa53b9144ceda18e3eec3cee04e8d" style="width: 100.0%; height: 100.0%;">     <div style="width:340px;">         <h4 style="margin-bottom:8px;">TOP30 클러스터 1</h4>         <b>클러스터 후보 수:</b> 7개<br>         <b>강변구분:</b> 남쪽<br>         <b>최고순위:</b> 1위<br>         <b>최저순위:</b> 13위<br>         <hr style="margin:8px 0;">         <b>대표 후보:</b> C0441<br>         <b>대표 후보 순위:</b> 1위<br>         <b>대표 후보 점수:</b> 52.394<br>         <b>평균 입지점수:</b> 44.408<br>         <b>최고 입지점수:</b> 52.394<br>         <hr style="margin:8px 0;">         <b>후보ID 목록:</b><br>         C0441, C0442, C0445, C0443, C0446, C0444, C0447<br>         <br>         <b>순위 목록:</b><br>         1, 2, 3, 4, 5, 6, 13     </div>     </div>`)[0];
+                popup_63bb88e2b31f982a9817b828a5c128d2.setContent(html_22aaa53b9144ceda18e3eec3cee04e8d);
+            
+        
+
+        circle_marker_4222e802d717553d49cf603b71334f9d.bindPopup(popup_63bb88e2b31f982a9817b828a5c128d2)
+        ;
+
+        
+    
+    
+            circle_marker_4222e802d717553d49cf603b71334f9d.bindTooltip(
+                `<div>
+                     클러스터 1 | 7개 후보 | 최고 1위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8d5f69883b3f98ce75c364ead54f27ff = L.marker(
+                [37.51142539399458, 126.99551669657122],
+                {
+}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+            var div_icon_030ab2a555188fee73394b44a38deb5e = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                width:28px;\n                height:28px;\n                line-height:28px;\n                border-radius:50%;\n                text-align:center;\n                font-size:12px;\n                font-weight:bold;\n                color:white;\n                background:#d7191c;\n                border:2px solid white;\n                transform: translate(-14px, -14px);\n            \"\u003e\n                7\n            \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+        
+    
+                marker_8d5f69883b3f98ce75c364ead54f27ff.setIcon(div_icon_030ab2a555188fee73394b44a38deb5e);
+            
+    
+            var circle_marker_a30dd1182f46516e1f4c6516fb563f6c = L.circleMarker(
+                [37.543271693153066, 126.92134907957873],
+                {"bubblingMouseEvents": true, "color": "#fdae61", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fdae61", "fillOpacity": 0.78, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 26, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+        var popup_4090cb54bafc1239babca651bd4891b6 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_ad249db600e37e972943ed2de644183c = $(`<div id="html_ad249db600e37e972943ed2de644183c" style="width: 100.0%; height: 100.0%;">     <div style="width:340px;">         <h4 style="margin-bottom:8px;">TOP30 클러스터 2</h4>         <b>클러스터 후보 수:</b> 7개<br>         <b>강변구분:</b> 북쪽<br>         <b>최고순위:</b> 7위<br>         <b>최저순위:</b> 24위<br>         <hr style="margin:8px 0;">         <b>대표 후보:</b> C0097<br>         <b>대표 후보 순위:</b> 7위<br>         <b>대표 후보 점수:</b> 39.957<br>         <b>평균 입지점수:</b> 36.939<br>         <b>최고 입지점수:</b> 39.957<br>         <hr style="margin:8px 0;">         <b>후보ID 목록:</b><br>         C0097, C0100, C0101, C0098, C0099, C0102, C0103<br>         <br>         <b>순위 목록:</b><br>         7, 8, 9, 10, 11, 12, 24     </div>     </div>`)[0];
+                popup_4090cb54bafc1239babca651bd4891b6.setContent(html_ad249db600e37e972943ed2de644183c);
+            
+        
+
+        circle_marker_a30dd1182f46516e1f4c6516fb563f6c.bindPopup(popup_4090cb54bafc1239babca651bd4891b6)
+        ;
+
+        
+    
+    
+            circle_marker_a30dd1182f46516e1f4c6516fb563f6c.bindTooltip(
+                `<div>
+                     클러스터 2 | 7개 후보 | 최고 7위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b857db19ea6e894da81f5ae7783efd06 = L.marker(
+                [37.543271693153066, 126.92134907957873],
+                {
+}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+            var div_icon_cfb6e98aa7595af696a8613c124291d1 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                width:28px;\n                height:28px;\n                line-height:28px;\n                border-radius:50%;\n                text-align:center;\n                font-size:12px;\n                font-weight:bold;\n                color:white;\n                background:#fdae61;\n                border:2px solid white;\n                transform: translate(-14px, -14px);\n            \"\u003e\n                7\n            \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+        
+    
+                marker_b857db19ea6e894da81f5ae7783efd06.setIcon(div_icon_cfb6e98aa7595af696a8613c124291d1);
+            
+    
+            var circle_marker_dd80e5d54bfec8816b3b63e8e37def66 = L.circleMarker(
+                [37.53739842655126, 127.04313545220344],
+                {"bubblingMouseEvents": true, "color": "#2c7bb6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2c7bb6", "fillOpacity": 0.78, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+        var popup_bfc9456d50821103a06a7c18fa7e6960 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_0461c3f865ede971dc7d27ef193086c3 = $(`<div id="html_0461c3f865ede971dc7d27ef193086c3" style="width: 100.0%; height: 100.0%;">     <div style="width:340px;">         <h4 style="margin-bottom:8px;">TOP30 클러스터 3</h4>         <b>클러스터 후보 수:</b> 3개<br>         <b>강변구분:</b> 북쪽<br>         <b>최고순위:</b> 14위<br>         <b>최저순위:</b> 29위<br>         <hr style="margin:8px 0;">         <b>대표 후보:</b> C0171<br>         <b>대표 후보 순위:</b> 14위<br>         <b>대표 후보 점수:</b> 33.060<br>         <b>평균 입지점수:</b> 29.492<br>         <b>최고 입지점수:</b> 33.060<br>         <hr style="margin:8px 0;">         <b>후보ID 목록:</b><br>         C0171, C0170, C0169<br>         <br>         <b>순위 목록:</b><br>         14, 18, 29     </div>     </div>`)[0];
+                popup_bfc9456d50821103a06a7c18fa7e6960.setContent(html_0461c3f865ede971dc7d27ef193086c3);
+            
+        
+
+        circle_marker_dd80e5d54bfec8816b3b63e8e37def66.bindPopup(popup_bfc9456d50821103a06a7c18fa7e6960)
+        ;
+
+        
+    
+    
+            circle_marker_dd80e5d54bfec8816b3b63e8e37def66.bindTooltip(
+                `<div>
+                     클러스터 3 | 3개 후보 | 최고 14위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8ed137c312bae64fdb02eff9b861c68c = L.marker(
+                [37.53739842655126, 127.04313545220344],
+                {
+}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+            var div_icon_85c5b28813096274c2c7a395346e0e16 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                width:28px;\n                height:28px;\n                line-height:28px;\n                border-radius:50%;\n                text-align:center;\n                font-size:12px;\n                font-weight:bold;\n                color:white;\n                background:#2c7bb6;\n                border:2px solid white;\n                transform: translate(-14px, -14px);\n            \"\u003e\n                3\n            \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+        
+    
+                marker_8ed137c312bae64fdb02eff9b861c68c.setIcon(div_icon_85c5b28813096274c2c7a395346e0e16);
+            
+    
+            var circle_marker_a0659830f5054ead43c35cdf47ed8b4c = L.circleMarker(
+                [37.53344379011289, 127.09600830204985],
+                {"bubblingMouseEvents": true, "color": "#2c7bb6", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2c7bb6", "fillOpacity": 0.78, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+        var popup_31cf64f3bfb1f26079d3291d411d9078 = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_c87ff05c1399a883095cebb7686c2b6d = $(`<div id="html_c87ff05c1399a883095cebb7686c2b6d" style="width: 100.0%; height: 100.0%;">     <div style="width:340px;">         <h4 style="margin-bottom:8px;">TOP30 클러스터 4</h4>         <b>클러스터 후보 수:</b> 4개<br>         <b>강변구분:</b> 북쪽<br>         <b>최고순위:</b> 15위<br>         <b>최저순위:</b> 21위<br>         <hr style="margin:8px 0;">         <b>대표 후보:</b> C0197<br>         <b>대표 후보 순위:</b> 15위<br>         <b>대표 후보 점수:</b> 30.057<br>         <b>평균 입지점수:</b> 29.105<br>         <b>최고 입지점수:</b> 30.057<br>         <hr style="margin:8px 0;">         <b>후보ID 목록:</b><br>         C0197, C0196, C0198, C0195<br>         <br>         <b>순위 목록:</b><br>         15, 17, 20, 21     </div>     </div>`)[0];
+                popup_31cf64f3bfb1f26079d3291d411d9078.setContent(html_c87ff05c1399a883095cebb7686c2b6d);
+            
+        
+
+        circle_marker_a0659830f5054ead43c35cdf47ed8b4c.bindPopup(popup_31cf64f3bfb1f26079d3291d411d9078)
+        ;
+
+        
+    
+    
+            circle_marker_a0659830f5054ead43c35cdf47ed8b4c.bindTooltip(
+                `<div>
+                     클러스터 4 | 4개 후보 | 최고 15위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d8df1cca24cc6c0592b7c58953253e35 = L.marker(
+                [37.53344379011289, 127.09600830204985],
+                {
+}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+            var div_icon_ca2f04300e9ffe3764f61248a0ca8087 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                width:28px;\n                height:28px;\n                line-height:28px;\n                border-radius:50%;\n                text-align:center;\n                font-size:12px;\n                font-weight:bold;\n                color:white;\n                background:#2c7bb6;\n                border:2px solid white;\n                transform: translate(-14px, -14px);\n            \"\u003e\n                4\n            \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+        
+    
+                marker_d8df1cca24cc6c0592b7c58953253e35.setIcon(div_icon_ca2f04300e9ffe3764f61248a0ca8087);
+            
+    
+            var circle_marker_47c03eb7acfc6cf2669146970de75af4 = L.circleMarker(
+                [37.51949258052206, 126.96317383857377],
+                {"bubblingMouseEvents": true, "color": "#1a9641", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9641", "fillOpacity": 0.78, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+        var popup_e72b60032f9093d0103b927eaee6fceb = L.popup({
+  "maxWidth": 380,
+});
+
+        
+            
+                var html_93646a8137b1995d690fca426719f87e = $(`<div id="html_93646a8137b1995d690fca426719f87e" style="width: 100.0%; height: 100.0%;">     <div style="width:340px;">         <h4 style="margin-bottom:8px;">TOP30 클러스터 5</h4>         <b>클러스터 후보 수:</b> 4개<br>         <b>강변구분:</b> 북쪽<br>         <b>최고순위:</b> 22위<br>         <b>최저순위:</b> 30위<br>         <hr style="margin:8px 0;">         <b>대표 후보:</b> C0126<br>         <b>대표 후보 순위:</b> 22위<br>         <b>대표 후보 점수:</b> 28.033<br>         <b>평균 입지점수:</b> 27.097<br>         <b>최고 입지점수:</b> 28.033<br>         <hr style="margin:8px 0;">         <b>후보ID 목록:</b><br>         C0126, C0125, C0127, C0124<br>         <br>         <b>순위 목록:</b><br>         22, 23, 28, 30     </div>     </div>`)[0];
+                popup_e72b60032f9093d0103b927eaee6fceb.setContent(html_93646a8137b1995d690fca426719f87e);
+            
+        
+
+        circle_marker_47c03eb7acfc6cf2669146970de75af4.bindPopup(popup_e72b60032f9093d0103b927eaee6fceb)
+        ;
+
+        
+    
+    
+            circle_marker_47c03eb7acfc6cf2669146970de75af4.bindTooltip(
+                `<div>
+                     클러스터 5 | 4개 후보 | 최고 22위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6a9551c2f5f2894e91c56143a6a8b4bf = L.marker(
+                [37.51949258052206, 126.96317383857377],
+                {
+}
+            ).addTo(feature_group_d1221fc1b142c59525a98b9744b2ed87);
+        
+    
+            var div_icon_cf5a25d0347ba03cf006a693219316a6 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                width:28px;\n                height:28px;\n                line-height:28px;\n                border-radius:50%;\n                text-align:center;\n                font-size:12px;\n                font-weight:bold;\n                color:white;\n                background:#1a9641;\n                border:2px solid white;\n                transform: translate(-14px, -14px);\n            \"\u003e\n                4\n            \u003c/div\u003e\n            ",
+  "className": "empty",
+});
+        
+    
+                marker_6a9551c2f5f2894e91c56143a6a8b4bf.setIcon(div_icon_cf5a25d0347ba03cf006a693219316a6);
+            
+    
+            feature_group_d1221fc1b142c59525a98b9744b2ed87.addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+        
+    
+            var feature_group_4b4c6007dac7889fe31d7cbe29804713 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_e23354f947150c7a4f245873416d695a = L.circleMarker(
+                [37.51341045520628, 127.00058202817353],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_2b855a0465c5448adc936ef71c977a60 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a256a23500a93ab830dc5e82dde343a7 = $(`<div id="html_a256a23500a93ab830dc5e82dde343a7" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0441</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 1위<br>         <b>입지점수:</b> 52.394<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.513410<br>         <b>경도:</b> 127.000582     </div>     </div>`)[0];
+                popup_2b855a0465c5448adc936ef71c977a60.setContent(html_a256a23500a93ab830dc5e82dde343a7);
+            
+        
+
+        circle_marker_e23354f947150c7a4f245873416d695a.bindPopup(popup_2b855a0465c5448adc936ef71c977a60)
+        ;
+
+        
+    
+    
+            circle_marker_e23354f947150c7a4f245873416d695a.bindTooltip(
+                `<div>
+                     C0441 | 1위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_87dd464f407546404b773fbb2a76713c = L.circleMarker(
+                [37.51281351011451, 126.99846589037799],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_df140e27a23cfa1d3f094b6156d1d545 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ce9ca7730a92bd6ba1aaba74b2f7b0ef = $(`<div id="html_ce9ca7730a92bd6ba1aaba74b2f7b0ef" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0442</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 2위<br>         <b>입지점수:</b> 51.041<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.512814<br>         <b>경도:</b> 126.998466     </div>     </div>`)[0];
+                popup_df140e27a23cfa1d3f094b6156d1d545.setContent(html_ce9ca7730a92bd6ba1aaba74b2f7b0ef);
+            
+        
+
+        circle_marker_87dd464f407546404b773fbb2a76713c.bindPopup(popup_df140e27a23cfa1d3f094b6156d1d545)
+        ;
+
+        
+    
+    
+            circle_marker_87dd464f407546404b773fbb2a76713c.bindTooltip(
+                `<div>
+                     C0442 | 2위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0c26967ee1f31e357d1081bf16117c0b = L.circleMarker(
+                [37.51054439757051, 126.99465970501844],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_eaaa96147a7bfff53c2fc4513d4e92e6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c633df1f041306f1f3bef7c5efddaefc = $(`<div id="html_c633df1f041306f1f3bef7c5efddaefc" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0445</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 3위<br>         <b>입지점수:</b> 46.928<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.510544<br>         <b>경도:</b> 126.994660     </div>     </div>`)[0];
+                popup_eaaa96147a7bfff53c2fc4513d4e92e6.setContent(html_c633df1f041306f1f3bef7c5efddaefc);
+            
+        
+
+        circle_marker_0c26967ee1f31e357d1081bf16117c0b.bindPopup(popup_eaaa96147a7bfff53c2fc4513d4e92e6)
+        ;
+
+        
+    
+    
+            circle_marker_0c26967ee1f31e357d1081bf16117c0b.bindTooltip(
+                `<div>
+                     C0445 | 3위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_265c9a525b3b3d5c46ea005325a218d9 = L.circleMarker(
+                [37.51268789732547, 126.99637606555694],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_2c3a51ab01346bee4b8d6fca1dcfd917 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ff7ad623f7c4381f4c3581dcb33c527b = $(`<div id="html_ff7ad623f7c4381f4c3581dcb33c527b" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0443</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 4위<br>         <b>입지점수:</b> 45.056<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.512688<br>         <b>경도:</b> 126.996376     </div>     </div>`)[0];
+                popup_2c3a51ab01346bee4b8d6fca1dcfd917.setContent(html_ff7ad623f7c4381f4c3581dcb33c527b);
+            
+        
+
+        circle_marker_265c9a525b3b3d5c46ea005325a218d9.bindPopup(popup_2c3a51ab01346bee4b8d6fca1dcfd917)
+        ;
+
+        
+    
+    
+            circle_marker_265c9a525b3b3d5c46ea005325a218d9.bindTooltip(
+                `<div>
+                     C0443 | 4위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2535e4574b4945c916c23f399a8f9a7e = L.circleMarker(
+                [37.50948972128603, 126.99296429385107],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_91571b5f5ef7746c7dadad40c210d774 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c7a71a2ad583d737be6caaec82275f41 = $(`<div id="html_c7a71a2ad583d737be6caaec82275f41" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0446</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 5위<br>         <b>입지점수:</b> 41.643<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.509490<br>         <b>경도:</b> 126.992964     </div>     </div>`)[0];
+                popup_91571b5f5ef7746c7dadad40c210d774.setContent(html_c7a71a2ad583d737be6caaec82275f41);
+            
+        
+
+        circle_marker_2535e4574b4945c916c23f399a8f9a7e.bindPopup(popup_91571b5f5ef7746c7dadad40c210d774)
+        ;
+
+        
+    
+    
+            circle_marker_2535e4574b4945c916c23f399a8f9a7e.bindTooltip(
+                `<div>
+                     C0446 | 5위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b3675263f424a8c44cb1e3d0411a9cf6 = L.circleMarker(
+                [37.51228606710636, 126.9946079877271],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_d98ec795fab9aa6c423cd6362b2ebfb2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_061855438450057a39bc32440a8e20e3 = $(`<div id="html_061855438450057a39bc32440a8e20e3" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0444</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 6위<br>         <b>입지점수:</b> 40.169<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.512286<br>         <b>경도:</b> 126.994608     </div>     </div>`)[0];
+                popup_d98ec795fab9aa6c423cd6362b2ebfb2.setContent(html_061855438450057a39bc32440a8e20e3);
+            
+        
+
+        circle_marker_b3675263f424a8c44cb1e3d0411a9cf6.bindPopup(popup_d98ec795fab9aa6c423cd6362b2ebfb2)
+        ;
+
+        
+    
+    
+            circle_marker_b3675263f424a8c44cb1e3d0411a9cf6.bindTooltip(
+                `<div>
+                     C0444 | 6위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2316f363961732ed2a23d8af435b0985 = L.circleMarker(
+                [37.508745440226896, 126.99096133855686],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_eed60fc231603f838fda9d825008320e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_acbbc9d1bdaa29275d94b129c7898f4e = $(`<div id="html_acbbc9d1bdaa29275d94b129c7898f4e" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0447</h4>         <b>클러스터ID:</b> 0<br>         <b>입지순위:</b> 13위<br>         <b>입지점수:</b> 33.625<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.508745<br>         <b>경도:</b> 126.990961     </div>     </div>`)[0];
+                popup_eed60fc231603f838fda9d825008320e.setContent(html_acbbc9d1bdaa29275d94b129c7898f4e);
+            
+        
+
+        circle_marker_2316f363961732ed2a23d8af435b0985.bindPopup(popup_eed60fc231603f838fda9d825008320e)
+        ;
+
+        
+    
+    
+            circle_marker_2316f363961732ed2a23d8af435b0985.bindTooltip(
+                `<div>
+                     C0447 | 13위 | 클러스터 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d3fc4126bca615867ef7ed4057278a7f = L.circleMarker(
+                [37.542844316445276, 126.91483815291608],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_6285c54e1cf9f08c44b592d2e3b28552 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b21ee26fe43d16dbe64b40c0de72fe33 = $(`<div id="html_b21ee26fe43d16dbe64b40c0de72fe33" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0097</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 7위<br>         <b>입지점수:</b> 39.957<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.542844<br>         <b>경도:</b> 126.914838     </div>     </div>`)[0];
+                popup_6285c54e1cf9f08c44b592d2e3b28552.setContent(html_b21ee26fe43d16dbe64b40c0de72fe33);
+            
+        
+
+        circle_marker_d3fc4126bca615867ef7ed4057278a7f.bindPopup(popup_6285c54e1cf9f08c44b592d2e3b28552)
+        ;
+
+        
+    
+    
+            circle_marker_d3fc4126bca615867ef7ed4057278a7f.bindTooltip(
+                `<div>
+                     C0097 | 7위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a883cfcd42263c2821690cdf059de60e = L.circleMarker(
+                [37.54327577665484, 126.92135500125151],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_a26d5b9cdb1e853ff281e74e728ce08d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_caf0a5014d01d20c80ff5d9526c66c3e = $(`<div id="html_caf0a5014d01d20c80ff5d9526c66c3e" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0100</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 8위<br>         <b>입지점수:</b> 39.443<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.543276<br>         <b>경도:</b> 126.921355     </div>     </div>`)[0];
+                popup_a26d5b9cdb1e853ff281e74e728ce08d.setContent(html_caf0a5014d01d20c80ff5d9526c66c3e);
+            
+        
+
+        circle_marker_a883cfcd42263c2821690cdf059de60e.bindPopup(popup_a26d5b9cdb1e853ff281e74e728ce08d)
+        ;
+
+        
+    
+    
+            circle_marker_a883cfcd42263c2821690cdf059de60e.bindTooltip(
+                `<div>
+                     C0100 | 8위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b04c06d5e248267422e7537c23ab8d01 = L.circleMarker(
+                [37.54397683398243, 126.92342353048465],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_1bdda4d891c9ef00d67c20a02adc256a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d5e43dd488d4244d02bb7178db1b7d6e = $(`<div id="html_d5e43dd488d4244d02bb7178db1b7d6e" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0101</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 9위<br>         <b>입지점수:</b> 39.065<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.543977<br>         <b>경도:</b> 126.923424     </div>     </div>`)[0];
+                popup_1bdda4d891c9ef00d67c20a02adc256a.setContent(html_d5e43dd488d4244d02bb7178db1b7d6e);
+            
+        
+
+        circle_marker_b04c06d5e248267422e7537c23ab8d01.bindPopup(popup_1bdda4d891c9ef00d67c20a02adc256a)
+        ;
+
+        
+    
+    
+            circle_marker_b04c06d5e248267422e7537c23ab8d01.bindTooltip(
+                `<div>
+                     C0101 | 9위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_780f3f2e58b217be456ad9b12dc48495 = L.circleMarker(
+                [37.54251587926572, 126.91705504795465],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_5c1cb3338711da15b02dbfcc0b1bc98a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_118cbcfc5c5996df801ee83b14f5ec50 = $(`<div id="html_118cbcfc5c5996df801ee83b14f5ec50" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0098</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 10위<br>         <b>입지점수:</b> 38.864<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.542516<br>         <b>경도:</b> 126.917055     </div>     </div>`)[0];
+                popup_5c1cb3338711da15b02dbfcc0b1bc98a.setContent(html_118cbcfc5c5996df801ee83b14f5ec50);
+            
+        
+
+        circle_marker_780f3f2e58b217be456ad9b12dc48495.bindPopup(popup_5c1cb3338711da15b02dbfcc0b1bc98a)
+        ;
+
+        
+    
+    
+            circle_marker_780f3f2e58b217be456ad9b12dc48495.bindTooltip(
+                `<div>
+                     C0098 | 10위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fb6d6ebf77df672b18a0a262c8056626 = L.circleMarker(
+                [37.54257017953614, 126.9193136616297],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_05c0f3ed5c5db937b4e16c70d24ed417 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_777631d2a3a74c4e31f73f1df8a172d5 = $(`<div id="html_777631d2a3a74c4e31f73f1df8a172d5" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0099</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 11위<br>         <b>입지점수:</b> 38.170<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.542570<br>         <b>경도:</b> 126.919314     </div>     </div>`)[0];
+                popup_05c0f3ed5c5db937b4e16c70d24ed417.setContent(html_777631d2a3a74c4e31f73f1df8a172d5);
+            
+        
+
+        circle_marker_fb6d6ebf77df672b18a0a262c8056626.bindPopup(popup_05c0f3ed5c5db937b4e16c70d24ed417)
+        ;
+
+        
+    
+    
+            circle_marker_fb6d6ebf77df672b18a0a262c8056626.bindTooltip(
+                `<div>
+                     C0099 | 11위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d093bbf051876a709bb8f5e4165718eb = L.circleMarker(
+                [37.54412861818159, 126.92566251351197],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_5cef1600519f6c368a6d282ab5020672 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_489974f1d4365c66caab5deac1b255fc = $(`<div id="html_489974f1d4365c66caab5deac1b255fc" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0102</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 12위<br>         <b>입지점수:</b> 35.302<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.544129<br>         <b>경도:</b> 126.925663     </div>     </div>`)[0];
+                popup_5cef1600519f6c368a6d282ab5020672.setContent(html_489974f1d4365c66caab5deac1b255fc);
+            
+        
+
+        circle_marker_d093bbf051876a709bb8f5e4165718eb.bindPopup(popup_5cef1600519f6c368a6d282ab5020672)
+        ;
+
+        
+    
+    
+            circle_marker_d093bbf051876a709bb8f5e4165718eb.bindTooltip(
+                `<div>
+                     C0102 | 12위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_75e2a3285da1dd286dd5c2561f6b3bed = L.circleMarker(
+                [37.54358970129179, 126.92779585217096],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_608a3946247149ceb90e0bec70785bdc = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_43b11b5be9af95b02c9e27c1d1585ae3 = $(`<div id="html_43b11b5be9af95b02c9e27c1d1585ae3" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0103</h4>         <b>클러스터ID:</b> 1<br>         <b>입지순위:</b> 24위<br>         <b>입지점수:</b> 27.768<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.543590<br>         <b>경도:</b> 126.927796     </div>     </div>`)[0];
+                popup_608a3946247149ceb90e0bec70785bdc.setContent(html_43b11b5be9af95b02c9e27c1d1585ae3);
+            
+        
+
+        circle_marker_75e2a3285da1dd286dd5c2561f6b3bed.bindPopup(popup_608a3946247149ceb90e0bec70785bdc)
+        ;
+
+        
+    
+    
+            circle_marker_75e2a3285da1dd286dd5c2561f6b3bed.bindTooltip(
+                `<div>
+                     C0103 | 24위 | 클러스터 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ae6ffba317dc45dd01ab5976d3bfcaae = L.circleMarker(
+                [37.53689143990712, 127.0453021745417],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_d59a17a4e3b5e221a754b4ca951dc4a3 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_88470b12acb0557da617b6b7b2b710e6 = $(`<div id="html_88470b12acb0557da617b6b7b2b710e6" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0171</h4>         <b>클러스터ID:</b> 2<br>         <b>입지순위:</b> 14위<br>         <b>입지점수:</b> 33.060<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.536891<br>         <b>경도:</b> 127.045302     </div>     </div>`)[0];
+                popup_d59a17a4e3b5e221a754b4ca951dc4a3.setContent(html_88470b12acb0557da617b6b7b2b710e6);
+            
+        
+
+        circle_marker_ae6ffba317dc45dd01ab5976d3bfcaae.bindPopup(popup_d59a17a4e3b5e221a754b4ca951dc4a3)
+        ;
+
+        
+    
+    
+            circle_marker_ae6ffba317dc45dd01ab5976d3bfcaae.bindTooltip(
+                `<div>
+                     C0171 | 14위 | 클러스터 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2f16d28623f9141447acbfbb807f5395 = L.circleMarker(
+                [37.537336154934145, 127.04311063954827],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_669a75ae5152671320b49b49b316f82d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5cda8789884813efc597b8bfbf03105c = $(`<div id="html_5cda8789884813efc597b8bfbf03105c" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0170</h4>         <b>클러스터ID:</b> 2<br>         <b>입지순위:</b> 18위<br>         <b>입지점수:</b> 29.370<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.537336<br>         <b>경도:</b> 127.043111     </div>     </div>`)[0];
+                popup_669a75ae5152671320b49b49b316f82d.setContent(html_5cda8789884813efc597b8bfbf03105c);
+            
+        
+
+        circle_marker_2f16d28623f9141447acbfbb807f5395.bindPopup(popup_669a75ae5152671320b49b49b316f82d)
+        ;
+
+        
+    
+    
+            circle_marker_2f16d28623f9141447acbfbb807f5395.bindTooltip(
+                `<div>
+                     C0170 | 18위 | 클러스터 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_daf42815b6d2ff3182251a572bbf5c38 = L.circleMarker(
+                [37.53796764525294, 127.0409935119563],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_a4b6ddd5af33a41a120da690371a19da = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2c692b56ac7045e09c65a0896e506d8e = $(`<div id="html_2c692b56ac7045e09c65a0896e506d8e" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0169</h4>         <b>클러스터ID:</b> 2<br>         <b>입지순위:</b> 29위<br>         <b>입지점수:</b> 26.047<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.537968<br>         <b>경도:</b> 127.040994     </div>     </div>`)[0];
+                popup_a4b6ddd5af33a41a120da690371a19da.setContent(html_2c692b56ac7045e09c65a0896e506d8e);
+            
+        
+
+        circle_marker_daf42815b6d2ff3182251a572bbf5c38.bindPopup(popup_a4b6ddd5af33a41a120da690371a19da)
+        ;
+
+        
+    
+    
+            circle_marker_daf42815b6d2ff3182251a572bbf5c38.bindTooltip(
+                `<div>
+                     C0169 | 29위 | 클러스터 2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2fe21f2161dfcc0e9e925247096eb84b = L.circleMarker(
+                [37.53409972581121, 127.0967760330378],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_0602b85a43b625a1f6ad6f89bc6d8904 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f3ec10d600d9a131595f002140e7e446 = $(`<div id="html_f3ec10d600d9a131595f002140e7e446" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0197</h4>         <b>클러스터ID:</b> 3<br>         <b>입지순위:</b> 15위<br>         <b>입지점수:</b> 30.057<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.534100<br>         <b>경도:</b> 127.096776     </div>     </div>`)[0];
+                popup_0602b85a43b625a1f6ad6f89bc6d8904.setContent(html_f3ec10d600d9a131595f002140e7e446);
+            
+        
+
+        circle_marker_2fe21f2161dfcc0e9e925247096eb84b.bindPopup(popup_0602b85a43b625a1f6ad6f89bc6d8904)
+        ;
+
+        
+    
+    
+            circle_marker_2fe21f2161dfcc0e9e925247096eb84b.bindTooltip(
+                `<div>
+                     C0197 | 15위 | 클러스터 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3cd12d085f780606ca722166e103d031 = L.circleMarker(
+                [37.532766967674874, 127.09526007562127],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_01ba043e8cc99e53d865d9d0d07ad8eb = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_adf8bb741dbef406a53fe2ac2ae7393a = $(`<div id="html_adf8bb741dbef406a53fe2ac2ae7393a" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0196</h4>         <b>클러스터ID:</b> 3<br>         <b>입지순위:</b> 17위<br>         <b>입지점수:</b> 29.596<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.532767<br>         <b>경도:</b> 127.095260     </div>     </div>`)[0];
+                popup_01ba043e8cc99e53d865d9d0d07ad8eb.setContent(html_adf8bb741dbef406a53fe2ac2ae7393a);
+            
+        
+
+        circle_marker_3cd12d085f780606ca722166e103d031.bindPopup(popup_01ba043e8cc99e53d865d9d0d07ad8eb)
+        ;
+
+        
+    
+    
+            circle_marker_3cd12d085f780606ca722166e103d031.bindTooltip(
+                `<div>
+                     C0196 | 17위 | 클러스터 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f187712194fd91c4661cd366849fad3e = L.circleMarker(
+                [37.53543056755849, 127.09830103132234],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_c5b5e418e8964b28d3b56dba72349cfd = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2953297b80903b04e18df68242dbb62b = $(`<div id="html_2953297b80903b04e18df68242dbb62b" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0198</h4>         <b>클러스터ID:</b> 3<br>         <b>입지순위:</b> 20위<br>         <b>입지점수:</b> 28.490<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.535431<br>         <b>경도:</b> 127.098301     </div>     </div>`)[0];
+                popup_c5b5e418e8964b28d3b56dba72349cfd.setContent(html_2953297b80903b04e18df68242dbb62b);
+            
+        
+
+        circle_marker_f187712194fd91c4661cd366849fad3e.bindPopup(popup_c5b5e418e8964b28d3b56dba72349cfd)
+        ;
+
+        
+    
+    
+            circle_marker_f187712194fd91c4661cd366849fad3e.bindTooltip(
+                `<div>
+                     C0198 | 20위 | 클러스터 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_02164b5d01abc18b1654333dd67c5ad5 = L.circleMarker(
+                [37.53147784969993, 127.09369620314233],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_930b716494eb01ff8b8dcb97011bf41b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8b870da0867dee66dba1e3dc1a54ec74 = $(`<div id="html_8b870da0867dee66dba1e3dc1a54ec74" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0195</h4>         <b>클러스터ID:</b> 3<br>         <b>입지순위:</b> 21위<br>         <b>입지점수:</b> 28.276<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.531478<br>         <b>경도:</b> 127.093696     </div>     </div>`)[0];
+                popup_930b716494eb01ff8b8dcb97011bf41b.setContent(html_8b870da0867dee66dba1e3dc1a54ec74);
+            
+        
+
+        circle_marker_02164b5d01abc18b1654333dd67c5ad5.bindPopup(popup_930b716494eb01ff8b8dcb97011bf41b)
+        ;
+
+        
+    
+    
+            circle_marker_02164b5d01abc18b1654333dd67c5ad5.bindTooltip(
+                `<div>
+                     C0195 | 21위 | 클러스터 3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3477c9831239caa82683d14ea68dbfa2 = L.circleMarker(
+                [37.51908334884222, 126.96418188314223],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_f5040c4ce43a0fd47f65b53201d7e6c6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_537d8bf813d600a33ccfa1c2bc11186f = $(`<div id="html_537d8bf813d600a33ccfa1c2bc11186f" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0126</h4>         <b>클러스터ID:</b> 4<br>         <b>입지순위:</b> 22위<br>         <b>입지점수:</b> 28.033<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.519083<br>         <b>경도:</b> 126.964182     </div>     </div>`)[0];
+                popup_f5040c4ce43a0fd47f65b53201d7e6c6.setContent(html_537d8bf813d600a33ccfa1c2bc11186f);
+            
+        
+
+        circle_marker_3477c9831239caa82683d14ea68dbfa2.bindPopup(popup_f5040c4ce43a0fd47f65b53201d7e6c6)
+        ;
+
+        
+    
+    
+            circle_marker_3477c9831239caa82683d14ea68dbfa2.bindTooltip(
+                `<div>
+                     C0126 | 22위 | 클러스터 4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0bbfd2844a00951e70ad348cd427fb89 = L.circleMarker(
+                [37.51989850574735, 126.96216635455903],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_428e8e3ec6760937d03b9712065fdd5e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f9fe1153301c73de1425707fda52de83 = $(`<div id="html_f9fe1153301c73de1425707fda52de83" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0125</h4>         <b>클러스터ID:</b> 4<br>         <b>입지순위:</b> 23위<br>         <b>입지점수:</b> 27.802<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.519899<br>         <b>경도:</b> 126.962166     </div>     </div>`)[0];
+                popup_428e8e3ec6760937d03b9712065fdd5e.setContent(html_f9fe1153301c73de1425707fda52de83);
+            
+        
+
+        circle_marker_0bbfd2844a00951e70ad348cd427fb89.bindPopup(popup_428e8e3ec6760937d03b9712065fdd5e)
+        ;
+
+        
+    
+    
+            circle_marker_0bbfd2844a00951e70ad348cd427fb89.bindTooltip(
+                `<div>
+                     C0125 | 23위 | 클러스터 4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2ce8702f838a0781cbee29871ff5a44a = L.circleMarker(
+                [37.51826253112351, 126.96619031112614],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_56b886b19b757863cd2f99801df8bdf1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5d1b5de78263a924ccf3d9334ac1d81c = $(`<div id="html_5d1b5de78263a924ccf3d9334ac1d81c" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0127</h4>         <b>클러스터ID:</b> 4<br>         <b>입지순위:</b> 28위<br>         <b>입지점수:</b> 26.543<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.518263<br>         <b>경도:</b> 126.966190     </div>     </div>`)[0];
+                popup_56b886b19b757863cd2f99801df8bdf1.setContent(html_5d1b5de78263a924ccf3d9334ac1d81c);
+            
+        
+
+        circle_marker_2ce8702f838a0781cbee29871ff5a44a.bindPopup(popup_56b886b19b757863cd2f99801df8bdf1)
+        ;
+
+        
+    
+    
+            circle_marker_2ce8702f838a0781cbee29871ff5a44a.bindTooltip(
+                `<div>
+                     C0127 | 28위 | 클러스터 4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a60b7bab318eb7301eda5b891dfcf768 = L.circleMarker(
+                [37.52072584957945, 126.96015669609632],
+                {"bubblingMouseEvents": true, "color": "#444444", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffffff", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4b4c6007dac7889fe31d7cbe29804713);
+        
+    
+        var popup_a3528ae8a9d4d2ef5212da7ac7be08ac = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ad836a6edb2f54efb388e95777f29116 = $(`<div id="html_ad836a6edb2f54efb388e95777f29116" style="width: 100.0%; height: 100.0%;">     <div style="width:280px;">         <h4 style="margin-bottom:8px;">후보 C0124</h4>         <b>클러스터ID:</b> 4<br>         <b>입지순위:</b> 30위<br>         <b>입지점수:</b> 26.010<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.520726<br>         <b>경도:</b> 126.960157     </div>     </div>`)[0];
+                popup_a3528ae8a9d4d2ef5212da7ac7be08ac.setContent(html_ad836a6edb2f54efb388e95777f29116);
+            
+        
+
+        circle_marker_a60b7bab318eb7301eda5b891dfcf768.bindPopup(popup_a3528ae8a9d4d2ef5212da7ac7be08ac)
+        ;
+
+        
+    
+    
+            circle_marker_a60b7bab318eb7301eda5b891dfcf768.bindTooltip(
+                `<div>
+                     C0124 | 30위 | 클러스터 4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var feature_group_827aabc4d44e9fead6253846228bc296 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_00a5086596078cd06969fbf520feba15 = L.marker(
+                [37.528392000000004, 126.935152],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_8924a1c43f95f0da4f73735496480602 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cbac632335a4c0cdcedd829eea2bc7ab = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_514ad9b8b14d4ca5a6118317b394a2fa = $(`<div id="html_514ad9b8b14d4ca5a6118317b394a2fa" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 여의도</h4>         <b>선착장ID:</b> D003<br>         <b>기존 선착장 내 순위:</b> 1위<br>         <b>입지점수:</b> 77.231<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.528392<br>         <b>경도:</b> 126.935152     </div>     </div>`)[0];
+                popup_cbac632335a4c0cdcedd829eea2bc7ab.setContent(html_514ad9b8b14d4ca5a6118317b394a2fa);
+            
+        
+
+        marker_00a5086596078cd06969fbf520feba15.bindPopup(popup_cbac632335a4c0cdcedd829eea2bc7ab)
+        ;
+
+        
+    
+    
+            marker_00a5086596078cd06969fbf520feba15.bindTooltip(
+                `<div>
+                     기존 선착장 여의도 | 1위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_00a5086596078cd06969fbf520feba15.setIcon(icon_8924a1c43f95f0da4f73735496480602);
+            
+    
+            var marker_969b7f1c205a548e5be64f057223b7d6 = L.marker(
+                [37.518639, 127.084704],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_127c9f3c7caa6f127e310b49b5cb5bb7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f444b25ec80c581ea0a430cfc5af696 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_61f8e98cdb38d15268dee572a13c8dad = $(`<div id="html_61f8e98cdb38d15268dee572a13c8dad" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 잠실</h4>         <b>선착장ID:</b> D007<br>         <b>기존 선착장 내 순위:</b> 2위<br>         <b>입지점수:</b> 28.635<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.518639<br>         <b>경도:</b> 127.084704     </div>     </div>`)[0];
+                popup_0f444b25ec80c581ea0a430cfc5af696.setContent(html_61f8e98cdb38d15268dee572a13c8dad);
+            
+        
+
+        marker_969b7f1c205a548e5be64f057223b7d6.bindPopup(popup_0f444b25ec80c581ea0a430cfc5af696)
+        ;
+
+        
+    
+    
+            marker_969b7f1c205a548e5be64f057223b7d6.bindTooltip(
+                `<div>
+                     기존 선착장 잠실 | 2위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_969b7f1c205a548e5be64f057223b7d6.setIcon(icon_127c9f3c7caa6f127e310b49b5cb5bb7);
+            
+    
+            var marker_995acd0c60e62073fdec89f626f2700d = L.marker(
+                [37.52857099999999, 127.06733899999999],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_3072097f8b05d579cb8c4289a5579343 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3367e708540a85893a3971380c5681a6 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_ca18c175c8439637b6fcb553f49ede1e = $(`<div id="html_ca18c175c8439637b6fcb553f49ede1e" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 뚝섬</h4>         <b>선착장ID:</b> D006<br>         <b>기존 선착장 내 순위:</b> 3위<br>         <b>입지점수:</b> 25.018<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.528571<br>         <b>경도:</b> 127.067339     </div>     </div>`)[0];
+                popup_3367e708540a85893a3971380c5681a6.setContent(html_ca18c175c8439637b6fcb553f49ede1e);
+            
+        
+
+        marker_995acd0c60e62073fdec89f626f2700d.bindPopup(popup_3367e708540a85893a3971380c5681a6)
+        ;
+
+        
+    
+    
+            marker_995acd0c60e62073fdec89f626f2700d.bindTooltip(
+                `<div>
+                     기존 선착장 뚝섬 | 3위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_995acd0c60e62073fdec89f626f2700d.setIcon(icon_3072097f8b05d579cb8c4289a5579343);
+            
+    
+            var marker_e527c38ab0b9612904362a3f4d013235 = L.marker(
+                [37.574851, 126.844147],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_cde0ef4a3851e499346819ef882dfe91 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_62a994ddf63e1274af3bd3d54ca798f3 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_4d38d1582f2ddc4e5d68c4f12447b7df = $(`<div id="html_4d38d1582f2ddc4e5d68c4f12447b7df" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 마곡</h4>         <b>선착장ID:</b> D001<br>         <b>기존 선착장 내 순위:</b> 4위<br>         <b>입지점수:</b> 24.482<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.574851<br>         <b>경도:</b> 126.844147     </div>     </div>`)[0];
+                popup_62a994ddf63e1274af3bd3d54ca798f3.setContent(html_4d38d1582f2ddc4e5d68c4f12447b7df);
+            
+        
+
+        marker_e527c38ab0b9612904362a3f4d013235.bindPopup(popup_62a994ddf63e1274af3bd3d54ca798f3)
+        ;
+
+        
+    
+    
+            marker_e527c38ab0b9612904362a3f4d013235.bindTooltip(
+                `<div>
+                     기존 선착장 마곡 | 4위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e527c38ab0b9612904362a3f4d013235.setIcon(icon_cde0ef4a3851e499346819ef882dfe91);
+            
+    
+            var marker_0a264b7d8b7b341e4936bad6c4362b8d = L.marker(
+                [37.553748000000006, 126.895687],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_da923b889b0d74b624dec95948e29cda = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6b3f3f6f80e0708a441d1a33c8bba333 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_ea1229414c3741666418aa3b92970d5c = $(`<div id="html_ea1229414c3741666418aa3b92970d5c" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 망원</h4>         <b>선착장ID:</b> D002<br>         <b>기존 선착장 내 순위:</b> 5위<br>         <b>입지점수:</b> 23.349<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.553748<br>         <b>경도:</b> 126.895687     </div>     </div>`)[0];
+                popup_6b3f3f6f80e0708a441d1a33c8bba333.setContent(html_ea1229414c3741666418aa3b92970d5c);
+            
+        
+
+        marker_0a264b7d8b7b341e4936bad6c4362b8d.bindPopup(popup_6b3f3f6f80e0708a441d1a33c8bba333)
+        ;
+
+        
+    
+    
+            marker_0a264b7d8b7b341e4936bad6c4362b8d.bindTooltip(
+                `<div>
+                     기존 선착장 망원 | 5위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0a264b7d8b7b341e4936bad6c4362b8d.setIcon(icon_da923b889b0d74b624dec95948e29cda);
+            
+    
+            var marker_a91a9f7705de4aae6d7ff7d54fed704f = L.marker(
+                [37.539265, 127.01777200000001],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_4c284613f578b870b8b082d2ce4034f8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_51eea6c781f983c08e69ba8c86fd8152 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_1b2c0a16d14c7fa098d36ea1eb5e2cdf = $(`<div id="html_1b2c0a16d14c7fa098d36ea1eb5e2cdf" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 옥수</h4>         <b>선착장ID:</b> D004<br>         <b>기존 선착장 내 순위:</b> 6위<br>         <b>입지점수:</b> 18.096<br>         <b>강변구분:</b> 북쪽<br>         <b>위도:</b> 37.539265<br>         <b>경도:</b> 127.017772     </div>     </div>`)[0];
+                popup_51eea6c781f983c08e69ba8c86fd8152.setContent(html_1b2c0a16d14c7fa098d36ea1eb5e2cdf);
+            
+        
+
+        marker_a91a9f7705de4aae6d7ff7d54fed704f.bindPopup(popup_51eea6c781f983c08e69ba8c86fd8152)
+        ;
+
+        
+    
+    
+            marker_a91a9f7705de4aae6d7ff7d54fed704f.bindTooltip(
+                `<div>
+                     기존 선착장 옥수 | 6위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a91a9f7705de4aae6d7ff7d54fed704f.setIcon(icon_4c284613f578b870b8b082d2ce4034f8);
+            
+    
+            var marker_e87aded4bc9bf7bfd3b77cb988007837 = L.marker(
+                [37.52656100000001, 127.016701],
+                {
+}
+            ).addTo(feature_group_827aabc4d44e9fead6253846228bc296);
+        
+    
+            var icon_8d10b9aa494f27296166da9e0515ba75 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_10cd1be6a710a509447fca799ffe6fc7 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_51b47a952aa4febf2138130d4273de89 = $(`<div id="html_51b47a952aa4febf2138130d4273de89" style="width: 100.0%; height: 100.0%;">     <div style="width:300px;">         <h4 style="margin-bottom:8px;">기존 선착장: 압구정</h4>         <b>선착장ID:</b> D005<br>         <b>기존 선착장 내 순위:</b> 7위<br>         <b>입지점수:</b> 16.662<br>         <b>강변구분:</b> 남쪽<br>         <b>위도:</b> 37.526561<br>         <b>경도:</b> 127.016701     </div>     </div>`)[0];
+                popup_10cd1be6a710a509447fca799ffe6fc7.setContent(html_51b47a952aa4febf2138130d4273de89);
+            
+        
+
+        marker_e87aded4bc9bf7bfd3b77cb988007837.bindPopup(popup_10cd1be6a710a509447fca799ffe6fc7)
+        ;
+
+        
+    
+    
+            marker_e87aded4bc9bf7bfd3b77cb988007837.bindTooltip(
+                `<div>
+                     기존 선착장 압구정 | 7위
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e87aded4bc9bf7bfd3b77cb988007837.setIcon(icon_8d10b9aa494f27296166da9e0515ba75);
+            
+    
+            feature_group_827aabc4d44e9fead6253846228bc296.addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+        
+    
+            var layer_control_7cfd262606eb452b6e9da3c1bf923490_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_d004279229dc40ad60888cad36344d69,
+                },
+                overlays :  {
+                    "TOP30 \ud074\ub7ec\uc2a4\ud130" : feature_group_d1221fc1b142c59525a98b9744b2ed87,
+                    "\ud074\ub7ec\uc2a4\ud130 \ud3ec\ud568 \uc6d0\ubcf8 \ud6c4\ubcf4\uc810" : feature_group_4b4c6007dac7889fe31d7cbe29804713,
+                    "\uae30\uc874 \ud55c\uac15\ubc84\uc2a4 \uc120\ucc29\uc7a5" : feature_group_827aabc4d44e9fead6253846228bc296,
+                },
+            };
+            let layer_control_7cfd262606eb452b6e9da3c1bf923490 = L.control.layers(
+                layer_control_7cfd262606eb452b6e9da3c1bf923490_layers.base_layers,
+                layer_control_7cfd262606eb452b6e9da3c1bf923490_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_f913c44bfaac020e36f62916fdd05b5f);
+
+        
+</script>
+</html>
