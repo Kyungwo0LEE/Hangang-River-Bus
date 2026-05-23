@@ -1,6 +1,6 @@
-# Hangang River Bus Dock Location Analysis
+# Demand-Driven Hangang River Bus Operation Optimization
 
-This repository contains the final analysis outputs for comparing candidate locations for new Han River Bus docks in Seoul. 
+This project proposes a demand-driven optimization framework for Han River Bus operation by integrating geospatial analysis, demand modeling, machine learning-based feature optimization, dock recommendation, and route planning.
 
 The analysis considers subway accessibility, subway ridership demand, administrative-dong population and worker counts, nearby tourist/night-view places, and distance from existing docks.
 
@@ -11,22 +11,85 @@ https://kyungwo0lee.github.io/Hangang-River-Bus/
 
 ## Repository Structure
 
-- `code/`: Final analysis notebook and helper Python scripts
+- `code/`: Jupyter notebooks documenting development process, exploratory analysis, modeling pipeline, and helper Python scripts
 - `outputs/`: Final processed Excel datasets
 - `maps/`: Final interactive HTML maps
 - `figures/`: Images used for presentation or documentation
 
-## Curation Criteria
 
-Only the final deliverables are included. Intermediate experiments, cache files, temporary files, and large raw SHP source files were excluded to keep the repository lightweight and readable.
+## Project Goal
 
-Examples of excluded files:
+This project aims to optimize Hangang River Bus operation through:
 
-- `test.ipynb`
-- `__pycache__/`
-- Randomly named 4-byte temporary files
-- Large raw geospatial files such as `N3A_E0032111.*` and `BND_ADM_DONG_PG.*`
-- Intermediate maps and experiment-specific candidate maps
+1. Demand prediction using spatial and transportation data
+2. Recommendation of additional dock locations
+3. Demand-driven route planning
+4. Data-driven operation optimization
+
+## Methodology
+
+1. Collect public transportation and geospatial datasets
+
+2. Construct analysis region
+- 1 km administrative-dong influence zone
+- 1.5 km Hangang boundary analysis region
+
+3. Build spatial demand features
+- Subway accessibility
+- Subway ridership
+- Population
+- Worker counts
+- Tourist attractions
+- SNS popularity
+
+4. Apply Min-Max normalization
+
+5. Optimize feature weights using Random Search
+
+6. Generate dock candidates at 200 m intervals along the Han River
+
+7. Generate candidate docks
+
+8. Cluster candidate locations
+
+9. Select representative dock locations
+
+10. Design optimized Hangang River Bus routes
+
+
+## Major Results
+
+Recommended additional docks:
+
+- Banpo
+- Seogang
+- Seoul Forest
+- Guui
+- Ichon
+
+New demand-driven routes were proposed based on predicted passenger demand patterns.
+
+
+## Project Scope
+
+The repository includes final deliverables as well as selected development artifacts to improve transparency and reproducibility.
+
+Included materials:
+
+- Final processed datasets
+- Interactive maps and visual outputs
+- Final analysis notebooks
+- Jupyter notebooks showing the development process, exploratory analysis, and intermediate experimentation
+- Helper Python scripts and supporting code
+
+Excluded materials:
+
+- Cache files (`__pycache__/`)
+- Random temporary files
+- Extremely large raw geospatial source files
+- Duplicate or unnecessary intermediate outputs
+
+The repository is curated to balance reproducibility, readability, and repository size.
 
 ## Key Deliverables
 
@@ -42,3 +105,21 @@ Examples of excluded files:
 ## Raw Data Note
 
 Raw source data is not included because of file size and redistribution considerations. To reproduce the analysis, download the required public datasets from sources such as Seoul Open Data Plaza, public data portals, or geospatial data portals, then place them according to the paths expected by the notebook and scripts in `code/`.
+
+
+## Tech Stack
+
+- Python
+- GeoPandas
+- Pandas
+- NumPy
+- Scikit-learn
+- Folium
+- Jupyter Notebook
+- GIS / Spatial Analysis
+
+---
+## Author
+
+**Kyungwoo Lee**  
+Undergraduate Student, Mechanical Engineering
