@@ -1,4 +1,4 @@
-# Han River Bus Dock Location Analysis
+# Hangang River Bus Dock Location Analysis
 
 This repository contains the final analysis outputs for comparing candidate locations for new Han River Bus docks in Seoul. 
 
